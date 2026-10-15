@@ -1,0 +1,9 @@
+POST http://0.0.0.0:8080/userInfoServlet
+Content-Type: application/json
+
+{
+    "username": "postgres",
+    "password": "ROOT",
+    "age": 34,
+    "name": "John Doe"
+}

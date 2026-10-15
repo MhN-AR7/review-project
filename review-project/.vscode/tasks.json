@@ -1,0 +1,55 @@
+{"version":"2.0.0","tasks":[
+        {
+            "label": "Stop Happy Tomcat",
+            "type": "shell",
+            "command": "${workspaceFolder}/.vscode/happy-spring-tomcat/stop-tomcat.sh",
+            "options": {
+                "shell": {
+                    "executable": "/bin/bash",
+                    "args": [
+                        "-c"
+                    ]
+                }
+            },
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared",
+                "close": true,
+                "showReuseMessage": false
+            }
+        },
+        {
+            "label": "Start Happy Tomcat",
+            "type": "shell",
+            "command": "${workspaceFolder}/.vscode/happy-spring-tomcat/start-tomcat.sh",
+            "options": {
+                "shell": {
+                    "executable": "/bin/bash",
+                    "args": [
+                        "-c"
+                    ]
+                }
+            },
+            "dependsOn": [
+                "Stop Happy Tomcat"
+            ],
+            "dependsOrder": "sequence",
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^$"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Starting Tomcat",
+                    "endsPattern": "Listening for transport dt_socket at address:"
+                }
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "group": "tomcat",
+                "showReuseMessage": false
+            }
+        }
+    ]}
