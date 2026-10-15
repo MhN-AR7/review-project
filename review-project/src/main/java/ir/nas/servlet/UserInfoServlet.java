@@ -1,6 +1,7 @@
 package ir.nas.servlet;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,7 +26,15 @@ public class UserInfoServlet extends HttpServlet
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         String pathInfo = req.getPathInfo();
-        System.out.println(pathInfo);
+
+        if(Optional.ofNullable(pathInfo).isEmpty() || pathInfo.equals("/")) {
+            this.objectMapper.writeValue(resp.getWriter(), uService.findAll());
+        }
+        else {
+            this.objectMapper.writeValue(resp.getWriter(), uService.findById(
+                    Long.parseLong(pathInfo.substring(1))
+            ).get());
+        }
     }
 
     @Override
