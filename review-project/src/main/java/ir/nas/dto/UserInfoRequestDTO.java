@@ -20,5 +20,5 @@ public class UserInfoRequestDTO
     private String username;
     private String password;
     private String name;
-    private short age;
+    private Short age;
 }

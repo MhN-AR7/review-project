@@ -22,3 +22,12 @@ Content-Type: application/json
 
 GET http://localhost:8081/review_project_war/user-info/1
 Content-Type: application/json
+
+###
+
+PUT http://localhost:8081/review_project_war/user-info/1
+Content-Type: application/json
+
+{
+  "username" : "MySQL"
+}

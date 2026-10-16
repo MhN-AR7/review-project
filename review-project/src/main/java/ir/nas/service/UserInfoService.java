@@ -42,4 +42,13 @@ public class UserInfoService
                 .map(UserInfoDaoToUserInfoResponseDto::convert)
                 .toList();
     }
+
+    public UserInfoResponseDTO update(Long id, UserInfoRequestDTO userInfoRequestDTO) {
+        UserInfoDAO userInfoDAO = this.repository.update(
+                id,
+                UserInfoRequestDtoTOUserInfoDao.convert(userInfoRequestDTO)
+        );
+
+        return UserInfoDaoToUserInfoResponseDto.convert(userInfoDAO);
+    }
 }

@@ -60,4 +60,39 @@ public class UserInfoServlet extends HttpServlet
 
         this.objectMapper.writeValue(resp.getWriter(), userInfoResponseDTO);
     }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String pathInfo = req.getPathInfo();
+        long id;
+
+        if(Optional.ofNullable(pathInfo).isEmpty() || !pathInfo.matches("/\\d+")) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Numeric id is required");
+            return;
+        }
+
+        if (!"application/json".equalsIgnoreCase(req.getContentType())) {
+            resp.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, "Content type must be application/json");
+            return;
+        }
+
+        UserInfoRequestDTO userInfoRequestDTO;
+
+        try {
+            userInfoRequestDTO = this.objectMapper.readValue(req.getReader(), UserInfoRequestDTO.class);
+        } catch (JsonParseException e) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid json body");
+            return;
+        }
+
+        id = Long.parseLong(pathInfo.substring(1));
+
+        UserInfoResponseDTO userInfoResponseDTO = this.uService.update(id, userInfoRequestDTO);
+
+        resp.setStatus(HttpServletResponse.SC_OK);
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+
+        objectMapper.writeValue(resp.getWriter(), userInfoResponseDTO);
+    }
 }

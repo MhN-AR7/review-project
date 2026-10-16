@@ -20,5 +20,5 @@ public class UserInfoResponseDTO
     private Long id;
     private String username;
     private String name;
-    private short age;
+    private Short age;
 }
