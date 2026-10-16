@@ -51,4 +51,18 @@ public class UserInfoRepository
                         }
                 );
     }
+
+    public boolean delete(Long id) {
+        return HibernateUtil.inTxReturn(
+                em -> {
+                    Optional<UserInfoDAO> optionalUserInfoDAO =
+                            Optional.ofNullable(em.find(UserInfoDAO.class, id));
+
+                    if (optionalUserInfoDAO.isEmpty()) return false;
+
+                    em.remove(optionalUserInfoDAO);
+                    return true;
+                }
+        );
+    }
 }

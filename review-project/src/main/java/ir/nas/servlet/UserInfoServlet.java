@@ -95,4 +95,23 @@ public class UserInfoServlet extends HttpServlet
 
         objectMapper.writeValue(resp.getWriter(), userInfoResponseDTO);
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String pathInfo = req.getPathInfo();
+
+        long id;
+
+        if (Optional.ofNullable(pathInfo).isEmpty() || !pathInfo.matches("/\\d+")) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Numeric id is required");
+            return;
+        }
+
+        id = Long.parseLong(pathInfo.substring(1));
+
+        boolean isDeleted = uService.delete(id);
+
+        if (isDeleted) resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        else resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+    }
 }

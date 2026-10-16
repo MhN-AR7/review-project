@@ -51,4 +51,8 @@ public class UserInfoService
 
         return UserInfoDaoToUserInfoResponseDto.convert(userInfoDAO);
     }
+
+    public boolean delete(Long id) {
+        return repository.delete(id);
+    }
 }
